@@ -24,7 +24,6 @@ class Test extends FunSuite {
               |O - - - - - O
               |- O O - O O -
             """.stripMargin)
-        println(matrix)
         assert(true)
     }
 
@@ -51,6 +50,41 @@ class Test extends FunSuite {
 
         assert(matrix == expected)
     }
+
+    test("paste of one Matrix onto another given predicate") {
+        val n = 10
+        val superQueen = new Matrix(
+            """
+              |- O O - O O -
+              |O - - - - - O
+              |O - - - - - O
+              |- - - q - - -
+              |O - - - - - O
+              |O - - - - - O
+              |- O O - O O -
+            """.stripMargin)
+
+        val chessboard = new Matrix((Array.fill[Boolean](n, n)(false)))
+
+        def prioritizeTruthy(old:Coordinate, newer:Coordinate):Boolean = old.value || newer.value
+
+        val pasted = Matrix.pasteMatrixAtCoordinate(Coordinate(2,2), chessboard, superQueen, predicate = prioritizeTruthy)
+        val expected = """
+              - - - - 0 - - - - -
+             |- - - - 0 - - - - -
+             |- - - - - - - - - -
+             |- - - - 0 - - - - -
+             |- - - - 0 - - - - -
+             |0 - 0 0 - - - - - -
+             |- - - - - - - - - -
+             |- - - - - - - - - -
+             |- - - - - - - - - -
+             |- - - - - - - - - -
+             |""".stripMargin
+        assert(pasted == expected)
+
+    }
+
 
 
 }
