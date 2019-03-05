@@ -12,28 +12,45 @@ class Test extends FunSuite {
     }
 
 
+    test("initializ matrix with pattern") {
+        val n = 10
+        val matrix = new Matrix(
+            """
+              |- O O - O O -
+              |O - - - - - O
+              |O - - - - - O
+              |- - - q - - -
+              |O - - - - - O
+              |O - - - - - O
+              |- O O - O O -
+            """.stripMargin)
+        println(matrix)
+        assert(true)
+    }
+
     test("set coordinate(0,0) as safe from Super-Queen") {
         val n = 10
-        val matrix = new Matrix((Array.fill[Boolean](n, n)(false)))
         val newCoordinate = Coordinate(0,0, true)
-        matrix.set(newCoordinate)
-        val expected =
-            """
-              0 - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              - - - - - - - - - -
-              """
+        val matrix =
+            new Matrix((Array.fill[Boolean](n, n)(false)))
 
-        def toSingleLine(string: String):String =
-            string
-              .replaceAll("\n"," ")
-              .replaceAll("-"," ")
-              .replaceAll(" ","")
-        assert(toSingleLine(matrix.toString()) == toSingleLine(expected))
+        matrix.set(newCoordinate)
+
+        val expected =
+            new Matrix("""
+              |O - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              |- - - - - - - - - -
+              """.stripMargin)
+
+        assert(matrix == expected)
     }
+
+
 }
